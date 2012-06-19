@@ -6,10 +6,15 @@
     <div id="viz"></div>
     <script type="text/javascript">
 
-	var data = {year: 2006, investment: 23.6}, 
-			   {year: 2007, investment: 11.1}, 
-			   {year: 2008, investment: 18.6};	    
-    
+var circle = svg.selectAll("circle")
+    .data([32, 57, 293], String);
+
+circle.enter().append("circle")
+    .attr("cy", 90)
+    .attr("cx", String)
+    .attr("r", Math.sqrt);
+
+circle.exit().remove();
     
 	</script>
 </body>
