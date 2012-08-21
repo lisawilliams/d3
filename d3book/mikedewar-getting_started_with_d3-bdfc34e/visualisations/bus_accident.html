@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8">
+<script src="d3.js"></script>
+
+<script>
+
+// This script uses D3.js to create a scatterplot chart that 
+// compares bus breakdowns to accident and injury rates. 
+
+function draw(data)
+	{
+		"use strict";
+		// Badass visualization code goes here
+		
+		// Set up SVG "viewport" -- a container for our chart:
+		var margin = 50, 
+		width = 700, 
+		height = 300, 
+		
+			// Before we start plotting our circles on our graph, 
+		// let's take a look at our data.  In particular, let's find the 
+		// minimum and maximum values of the data. 
+		// That will help us mark the axes of the chart. 
+		// We use the d3.extent function to look at the data. 
+		
+		//Declare a variable, x_extent, that is equal to the values that
+		// are returned by d3.extent when applied to our dataset
+		
+		var x_extent = d3.extent(data, function(d){return d.collision_with_injury}),
+		
+		// Now let's work on the y-axis of our chart. 
+		// First we use D3 to extract the distance between breakdowns
+		// from our dataset: 
+		var y_extent = d3.extent(data, function(d){return d. dist_between_fail});
+		
+		
+		// Lets use what we know now to build the scales on the sides of our chart.
+		// We'll start with the X axis. 
+		//We use the D3 function d3.scale.linear(), and note the margins for our chart
+		// that we set up at the very beginning. 
+		// Then we take the variable created in the last step, x_extent
+		// and declare those to be the "domain" of the chart. 
+		var x_scale = d3.scale.linear()
+			.range([margin, width-margin])
+			.domain(x_extent)
+			
+		// Now let's take that data and plot it out on the Y axis: 
+		var	y_scale = d3.scale.linear()
+			.range([height-margin, margin])
+			.domain(y_extent)
+		
+		
+		// Now start with the D3 code for our scatterplot chart:
+		
+		// Have d3 select the "body" element of the HTML page so we can 
+		// do stuff to it
+		d3.select("body")
+			// This time we're going to use SVG graphics, so append SVG
+			.append("svg")
+			// We already specified a width and height for our SVG container.
+			// Now let's pass those variables to D3 so D3 can work with them.
+			.attr("width", width)
+			.attr("height", height)
+			
+		
+		// We're making a scatter chart that will show a bunch of circles,
+		// So with D3, we'll select all the SVG elements labeled "circle" 
+		// So that we can match the circles location and size with our data.
+		.selectAll("circle")	
+		.data(data)
+		.enter()
+		.append("circle");
+		
+		// Now that we have our pretty scales, let's start putting 
+		// some circles on our graph!
+		d3.selectAll("circle")
+			.attr("cx" function(d){return X_scale(d.collision_with_injury)})
+				.attr("cy", function(d){return y_scale(d.dist_between_fail)});
+				
+		// So how big ya want those circles?
+		d3.selectAll("circle")
+			.attr("r", 5);				
+	}
+	
+</script>
+
+</head>
+<body>
+
+<script>
+// All this code has to operate on some data. 
+// This is where we put the pointer to the data our code will work on. 
+d3.json("data/bus_perf.json", draw);
+</script>
+
+</body>
+</html>	
