@@ -73,6 +73,16 @@ function draw(data) {
 				.attr("transform", "translate(" + margin + ",0)")
 			.call(y_axis);
 			
+		d3.select(".x.axis")
+			.append("text")
+				.text("collisions with injury (per million miles)")
+				.attr("x", (width / 2) - margin)
+				.attr("y", margin / 1.5);	
+				
+		d3.select(".y.axis")
+			.append("text")	
+			.text("mean distance between failure (miles)")	
+				.attr("transform", "rotate (-90, -43, 0) translate(-280)");
 				
 							
 	}
