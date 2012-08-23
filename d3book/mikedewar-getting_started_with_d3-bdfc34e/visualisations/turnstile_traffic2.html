@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8">
+<script src="d3.js"></script>
+
+<script>
+
+function draw(data)
+	{
+		"use strict";
+		
+		
+		// Set up viewport
+		var margin = 40, 
+			width = 700 - margin, 
+			height = 300 - margin;
+			
+		d3.select("body")
+			.append("svg")
+				.attr("width", width+margin)
+				.attr("height", height+margin)
+			.append(g)
+				.attr("class", "chart");
+				
+		d3.select("svg")
+			.selectAll("circle.times_square")
+			.data(data.times_square)
+			.enter()
+			.append("circle")
+				.attr("class", "times_square");
+				
+		d3.select("svg")
+			.selectAll("circle.grand_central")
+			.data(data.grand_central)
+			.enter()
+			.append("circle")
+				.attr("class", "grand_central");
+				
+		var count_extent = d3.extent(data.times_square.concat(data.grand_central)
+			function(d){return d.count}
+		);
+		
+		var count_scale = d3.scale.linear()
+			.domain(count_extent)
+			.range([height, margin]);
+			
+		d3.selectAll("circle")
+			.attr("cy", function(d){return count_scale(d.count);});
+			
+		var time_extent = d3.extent(data.times_square.concat(data.grand_central);
+			function(d){return d.time}
+		);
+		
+		var time_scale = d3.time.scale()
+			.domain(time_extent)
+			.range([margin, width]);
+			
+		d3.selectAll("circle")
+			.attr("cx", function(d){return time_scale(d.time);});	
+			
+		d3.selectAll("circle")
+			.attr("cy", function(d){return count_scale(d.count);})
+		count_scale(d.count;)})	
+			.attr("cx", function(d){return time_scale(d.time);})
+		time_scale(d.time);})
+			.attr("r", 3)				
+		
+										
+	}
+	
+</script>
+
+</head>
+<body>
+
+<script>
+d3.json("data/some_data.json", draw);
+</script>
+
+</body>
+</html>	
